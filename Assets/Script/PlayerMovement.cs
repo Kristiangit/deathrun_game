@@ -5,55 +5,77 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float MovementSpeed = 5f;
-    private Vector3 pos;
+    private Vector3 targetPos;
     private Rigidbody rb;
 
-    public float obsPos;
+    public Vector3 obsPos;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        transform.position = new Vector3(obsPos, obsPos -1f, 0);
+        obsPos = GameObject.Find("environment").transform.position;
+        transform.position = new Vector3(obsPos.x + 1f, obsPos.y, 0);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        float obsX = obsPos;
-        float obsY = obsPos -1f;
+        float velo_X = 0f;
+        float velo_Y = 0f;
 
-        pos = transform.position;
+        float obsX = obsPos.x +1f;
+        float obsY = obsPos.y;
+
+        targetPos.z = transform.position.z;
 
         if (Input.GetKey(KeyCode.UpArrow)) // Up
         {
-            pos.y = obsY + 0.5f;  
+            velo_Y = 4f;
+            targetPos.y = obsY + 0.5f;  
         }
 
         if (Input.GetKey(KeyCode.DownArrow)) // Down
         {
-            pos.y = obsY - 0.5f;
+            velo_Y = -4f;
+            targetPos.y = obsY - 0.5f;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow)) // Left
         {
-            pos.x = obsX - 0.5f;
+            velo_X = -4f;
+            targetPos.x = obsX - 0.5f;
         }
 
         if (Input.GetKey(KeyCode.RightArrow)) // Right
         {
-            pos.x = obsX + 0.5f;
+            velo_X = 4f;
+            targetPos.x = obsX + 0.5f;
         }
 
 
 
+        if (transform.position == targetPos)
+        {
+            Debug.Log("target hit");
+            Debug.Log(transform.position);
+            Debug.Log(targetPos);
+
+            velo_X = 0f;
+            velo_Y = 0f;
+            transform.position = targetPos;
+        }
 
 
-        this.transform.position = pos;
-
-        rb.velocity = new Vector3(0, 0, 5);
+        rb.velocity = new Vector3(velo_X, velo_Y, MovementSpeed);
 
         //Debug.Log(rb.velocity);
 
+    }
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("cage"))
+        {
+            obsPos = other.gameObject.transform.position;
+        }
     }
 }
