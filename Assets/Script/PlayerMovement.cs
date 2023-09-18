@@ -9,73 +9,105 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
 
     public Vector3 obsPos;
-
+    private float seconds = 0f;
+    private float velo_X = 0f;
+    private float velo_Y = 0f;
+    private bool timer = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         obsPos = GameObject.Find("environment").transform.position;
+        Debug.Log(obsPos);
         transform.position = new Vector3(obsPos.x + 1f, obsPos.y, 0);
+        targetPos = transform.position;
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        float velo_X = 0f;
-        float velo_Y = 0f;
+        
 
         float obsX = obsPos.x +1f;
         float obsY = obsPos.y;
 
         targetPos.z = transform.position.z;
 
-        if (Input.GetKey(KeyCode.UpArrow)) // Up
+        if (Input.GetKey(KeyCode.UpArrow) && transform.position.y != obsY + 0.5f) // Up
         {
             velo_Y = 4f;
-            targetPos.y = obsY + 0.5f;  
-        }
+            targetPos.y = obsY + 0.5f;
+            timer = true;
 
-        if (Input.GetKey(KeyCode.DownArrow)) // Down
-        {
-            velo_Y = -4f;
-            targetPos.y = obsY - 0.5f;
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow)) // Left
-        {
-            velo_X = -4f;
-            targetPos.x = obsX - 0.5f;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow)) // Right
-        {
-            velo_X = 4f;
-            targetPos.x = obsX + 0.5f;
-        }
-
-
-
-        if (transform.position == targetPos)
-        {
-            Debug.Log("target hit");
+            Debug.Log("up hit");
             Debug.Log(transform.position);
             Debug.Log(targetPos);
 
-            velo_X = 0f;
-            velo_Y = 0f;
-            transform.position = targetPos;
+            
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow) && transform.position.y != obsY - 0.5f) // Down
+        {
+            velo_Y = -4f;
+            targetPos.y = obsY - 0.5f;
+            timer = true;
+            
+            Debug.Log("down hit");
+            Debug.Log(transform.position);
+            Debug.Log(targetPos);
+
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x != obsX - 0.5f) // Left
+        {
+            velo_X = -4f;
+            targetPos.x = obsX - 0.5f;
+            timer = true;
+
+
+            Debug.Log("left hit");
+            Debug.Log(transform.position);
+            Debug.Log(targetPos);
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x != obsX + 0.5f) // Right
+        {
+            velo_X = 4f;
+            targetPos.x = obsX + 0.5f;
+            timer = true;
+
+            Debug.Log("right hit");
+            Debug.Log(transform.position);
+            Debug.Log(targetPos);
         }
 
 
-        rb.velocity = new Vector3(velo_X, velo_Y, MovementSpeed);
 
         //Debug.Log(rb.velocity);
+        if (timer)
+        {
+            seconds += Time.deltaTime;
+        }
+        
+        if (seconds >= 0.25f)
+        {
+            velo_X = 0f;
+            velo_Y = 0f;
+            transform.position = targetPos;
+            Debug.Log(targetPos);
+            seconds = 0f;
+            timer = false;
+        }
+        rb.velocity = new Vector3(velo_X, velo_Y, MovementSpeed);
 
     }
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("cage"))
         {
             obsPos = other.gameObject.transform.position;
+            Debug.Log("new envo");
+            Debug.Log(obsPos);
         }
     }
 }
