@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow) && transform.position.y != obsY + 0.5f) // Up
         {
-            velo_Y = 4f;
+            velo_Y = 8f;
             targetPos.y = obsY + 0.5f;
             timer = true;
 
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow) && transform.position.y != obsY - 0.5f) // Down
         {
-            velo_Y = -4f;
+            velo_Y = -8f;
             targetPos.y = obsY - 0.5f;
             timer = true;
             
@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x != obsX - 0.5f) // Left
         {
-            velo_X = -4f;
+            velo_X = -8f;
             targetPos.x = obsX - 0.5f;
             timer = true;
 
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.RightArrow) && transform.position.x != obsX + 0.5f) // Right
         {
-            velo_X = 4f;
+            velo_X = 8f;
             targetPos.x = obsX + 0.5f;
             timer = true;
 
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
             seconds += Time.deltaTime;
         }
         
-        if (seconds >= 0.25f)
+        if (seconds >= 0.125f)
         {
             velo_X = 0f;
             velo_Y = 0f;
