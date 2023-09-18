@@ -27,8 +27,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         float obsX = obsPos.x +1f;
         float obsY = obsPos.y;
 
