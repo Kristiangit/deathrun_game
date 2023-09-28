@@ -38,9 +38,9 @@ public class PlayerMovement : MonoBehaviour
             targetPos.y = obsY + 0.5f;
             timer = true;
 
-            Debug.Log("up hit");
-            Debug.Log(transform.position);
-            Debug.Log(targetPos);
+            // Debug.Log("up hit");
+            // Debug.Log(transform.position);
+            // Debug.Log(targetPos);
 
             
         }
@@ -51,9 +51,9 @@ public class PlayerMovement : MonoBehaviour
             targetPos.y = obsY - 0.5f;
             timer = true;
             
-            Debug.Log("down hit");
-            Debug.Log(transform.position);
-            Debug.Log(targetPos);
+            // Debug.Log("down hit");
+            // Debug.Log(transform.position);
+            // Debug.Log(targetPos);
 
         }
 
@@ -64,9 +64,9 @@ public class PlayerMovement : MonoBehaviour
             timer = true;
 
 
-            Debug.Log("left hit");
-            Debug.Log(transform.position);
-            Debug.Log(targetPos);
+            // Debug.Log("left hit");
+            // Debug.Log(transform.position);
+            // Debug.Log(targetPos);
         }
 
         if (Input.GetKey(KeyCode.RightArrow) && transform.position.x != obsX + 0.5f) // Right
@@ -75,9 +75,9 @@ public class PlayerMovement : MonoBehaviour
             targetPos.x = obsX + 0.5f;
             timer = true;
 
-            Debug.Log("right hit");
-            Debug.Log(transform.position);
-            Debug.Log(targetPos);
+            // Debug.Log("right hit");
+            // Debug.Log(transform.position);
+            // Debug.Log(targetPos);
         }
 
 
@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
             velo_X = 0f;
             velo_Y = 0f;
             transform.position = targetPos;
-            Debug.Log(targetPos);
+            // Debug.Log(targetPos);
             seconds = 0f;
             timer = false;
         }
@@ -104,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("cage"))
         {
             obsPos = other.gameObject.transform.position;
+
+            
             Debug.Log("new envo");
             Debug.Log(obsPos);
         }
